@@ -8,13 +8,13 @@ echo "--- Config SSH ---"
 read -p "> Select port for connection ssh, 42 by default but it not secure
 (port unassigned : 4, 6, 8, 10, 12, 14, 16, 26, 28, 30, 32, 34, 36, 40, 60) : " portSsh
 while ! [ "$portSsh" -ge 1 -a "$portSsh" -le 65535 ]; do
-	read -p "Please enter a number between 1-65535 : " portSsh
+    read -p "Please enter a number between 1-65535 : " portSsh
 done
 
 read -p "> Disable Password Authentication (if you have a key Authentication) [y/n] :" ynPassAuth
 case $ynPassAuth in
-    [Yyes]* ) 	passwordAuth="no";;
-	* )			passwordAuth="yes";
+    [Yyes]* )   passwordAuth="no";;
+    * )         passwordAuth="yes";
 esac
 
 echo "Port $portSsh
@@ -47,12 +47,12 @@ echo "--- Config SSL ---"
 sudo mkdir -p /etc/nginx/certs
 read -p "> Do you want to generate an SSL certificate [y/n] :" ynSsl
     case $ynSsl in
-        [Yyes]* )	cd /etc/nginx/certs/
-					echo 'basicConstraints=CA:true' | sudo tee android_options.txt
-					sudo openssl genrsa -out owncloud.key 4096
-					sudo openssl req -new -key owncloud.key -out owncloud.csr
-					sudo openssl x509 -req -days 3650 -in owncloud.csr -signkey owncloud.key -extfile ./android_options.txt -out owncloud.crt;;
- 		* ) echo "Even if the SSL certificate is not generated, the Nginx web server needs a 'dhparam.pem' file in : /etc/nginx/certs/";
+        [Yyes]* )   cd /etc/nginx/certs/
+                    echo 'basicConstraints=CA:true' | sudo tee android_options.txt
+                    sudo openssl genrsa -out owncloud.key 4096
+                    sudo openssl req -new -key owncloud.key -out owncloud.csr
+                    sudo openssl x509 -req -days 3650 -in owncloud.csr -signkey owncloud.key -extfile ./android_options.txt -out owncloud.crt;;
+        * ) echo "Even if the SSL certificate is not generated, the Nginx web server needs a 'dhparam.pem' file in : /etc/nginx/certs/";
     esac
 
 
@@ -60,16 +60,16 @@ echo "--- Config No-Ip ---"
 cd /tmp/
 read -p "> Do you wish to install no-ip client for fix your IP [y/n] :" ynNoIP
     case $ynNoIP in
-        [Yyes]* ) 	sudo wget https://www.noip.com/client/linux/noip-duc-linux.tar.gz
-					sudo wget http://download.sizious.com/rpi/noip-duc-raspbian.tar.bz2
-					cd /usr/local/src/
-					sudo tar xf /tmp/noip-duc-linux.tar.gz
-					sudo tar -xjvf /tmp/noip-duc-raspbian.tar.bz2
-					cd noip-*/
-					sudo make install
-					sudo chmod +x raspbian.noip2.sh service.install.sh service.uninstall.sh
-					sudo ./service.install.sh raspbian;;
- 		* ) echo "Not install No-ip.";
+        [Yyes]* )   sudo wget https://www.noip.com/client/linux/noip-duc-linux.tar.gz
+                    sudo wget http://download.sizious.com/rpi/noip-duc-raspbian.tar.bz2
+                    cd /usr/local/src/
+                    sudo tar xf /tmp/noip-duc-linux.tar.gz
+                    sudo tar -xjvf /tmp/noip-duc-raspbian.tar.bz2
+                    cd noip-*/
+                    sudo make install
+                    sudo chmod +x raspbian.noip2.sh service.install.sh service.uninstall.sh
+                    sudo ./service.install.sh raspbian;;
+        * ) echo "Not install No-ip.";
     esac
 
 echo "--- SART ---"
@@ -256,10 +256,9 @@ sudo ln -s /etc/nginx/sites-available/owncloud /etc/nginx/sites-enabled/
 
 # Generate SSL certificate
 case $ynSsl in
-	[Yyes]* )	echo "-- Generate SSL certificate"
-				echo "(can last a really long time)"
-				cd /etc/nginx/certs/
-				sudo openssl dhparam -out dhparam.pem 4096
+    [Yyes]* )   echo "-- Generate SSL certificate"
+                cd /etc/nginx/certs/
+                sudo openssl dhparam -out dhparam.pem 4096
 esac
 
 
