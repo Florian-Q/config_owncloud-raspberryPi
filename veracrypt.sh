@@ -6,6 +6,7 @@ if ! [ -x "$(command -v veracrypt)" ]; then
 	tar -vxjf ./veracrypt-1.21-raspbian-setup.tar.bz2
 	sudo chmod +x veracrypt-1.21-setup-*
 	./veracrypt-1.21-setup-console-armv7
-	sudo -u www-data mkdir -p /var/www/owncloud/data
+	sudo mkdir -p /var/www/owncloud/data
+	sudo chown www-data:www-data /var/www/owncloud/data
 fi
 veracrypt -k "" --pim=0 -m=nokernelcrypto --protect-hidden=no /dev/sda1 /var/www/owncloud/data
